@@ -9,7 +9,7 @@ if [ $# -eq 0 ]; then
 fi
 
 if [ $1 = "build" ]; then
-    clang -S -emit-llvm main.c
+    # clang -S -emit-llvm main.c
     clang -S -emit-llvm my_fn.c
     llvm-link main.ll my_fn.ll -o merged.bc
     llc -filetype=obj merged.bc -o merged.o
@@ -17,7 +17,7 @@ if [ $1 = "build" ]; then
 fi
 
 if [ $1 = "build-separate-o-files" ]; then
-    clang -S -emit-llvm main.c
+    # clang -S -emit-llvm main.c
     clang -S -emit-llvm my_fn.c
     llc -filetype=obj main.ll -o main.o
     llc -filetype=obj my_fn.ll -o my_fn.o
@@ -25,19 +25,19 @@ if [ $1 = "build-separate-o-files" ]; then
 fi
 
 if [ $1 = "build-clang" ]; then
-    clang -S -emit-llvm main.c
+    # clang -S -emit-llvm main.c
     clang -S -emit-llvm my_fn.c
     llc -filetype=obj main.ll -o main.o
     llc -filetype=obj my_fn.ll -o my_fn.o
     clang main.o my_fn.o -o merged
 fi
 
-if [ $1 = "test" ]; then
-    clang -S -emit-llvm test.c
-    llc -filetype=obj test.ll -o test.o
-    ld  /usr/lib/crt1.o /usr/lib/crti.o /usr/lib/crtn.o test.o -lc -o test -dynamic-linker /lib/ld-linux-x86-64.so.2
-fi
+# if [ $1 = "test" ]; then
+#     clang -S -emit-llvm test.c
+#     llc -filetype=obj test.ll -o test.o
+#     ld  /usr/lib/crt1.o /usr/lib/crti.o /usr/lib/crtn.o test.o -lc -o test -dynamic-linker /lib/ld-linux-x86-64.so.2
+# fi
 
 if [ $1 = "clean" ]; then
-    rm -f main.ll my_fn.ll main.o my_fn.o my_fn.o merged.bc merged.o merged test.o test.ll test
+    rm -f my_fn.ll main.o my_fn.o my_fn.o merged.bc merged.o merged test.o test.ll test
 fi
